@@ -12,7 +12,7 @@ const options: swaggerJsdoc.Options = {
     servers: [
       { url: "http://localhost:9000/api", description: "Local server" },
       {
-        url: "https://your-deployed-domain.com/api",
+        url: "https://plp-bn.onrender.com/api",
         description: "Production server",
       },
     ],
