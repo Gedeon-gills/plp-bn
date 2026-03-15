@@ -26,8 +26,26 @@ export const sendContactMessage = async (req: Request, res: Response) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.ADMIN_EMAIL,
+      replyTo: email,
       subject: subject || "New Contact Message",
       html: contactEmailTemplate(name, email, subject, message),
+    });
+
+    // 2️⃣ Send confirmation email to the user
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "We received your message",
+      html: `
+        <h3>Hello ${name},</h3>
+        <p>Thank you for contacting us.</p>
+        <p>We have received your message and we will Contact you soon after reviewing your message.</p>
+        <br/>
+        <p><strong>Your message:</strong></p>
+        <p>${message}</p>
+        <br/>
+        <p>Best regards,<br/>PLP Support Team</p>
+      `,
     });
 
     return res.status(200).json({
